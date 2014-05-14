@@ -2,6 +2,7 @@
 
 import sys
 import traceback
+import xml.etree.ElementTree as ET
 
 from clint.textui import indent, puts, colored
 
@@ -173,3 +174,14 @@ class ProgressFormatter(DocumentationFormatter):
         puts()
         super(ProgressFormatter, self).summary(duration, example_count, failed_count, pending_count)
 
+
+class XUnitFormatter(Formatter):
+
+    def __init__(self):
+        self.root = ET.Element('testsuites', name='mamba')
+
+    def example_group_started(self, example_group):
+        self.current_example_group = ET.SubElement(self.root, 'testsuite', name=example_group.subject)
+
+    def example_started(self, example):
+        self.current_example = ET.SubElement(self.current_example_group, 'testcase', name=example.name)
