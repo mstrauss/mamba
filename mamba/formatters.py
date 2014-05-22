@@ -185,3 +185,12 @@ class XUnitFormatter(Formatter):
 
     def example_started(self, example):
         self.current_example = ET.SubElement(self.current_example_group, 'testcase', name=example.name)
+
+    def summary(self, duration, example_count, failed_count, pending_count):
+        self.root.set('tests', str(example_count))
+        self.root.set('failures', str(failed_count))
+        self.root.set('disabled', str(pending_count))
+        self.root.set('time', self._format_duration(duration))
+
+    def _format_duration(self, duration):
+        return '%.4f' % duration.total_seconds()

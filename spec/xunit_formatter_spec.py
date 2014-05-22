@@ -21,11 +21,24 @@ with description(formatters.XUnitFormatter):
 
         self.root = self.formatter.root
 
-    with it('contains testsuites as root'):
-        expect(self.root.tag).to.be('testsuites')
+    with context('when checking root'):
+        with it('contains testsuites as tag name'):
+            expect(self.root.tag).to.be('testsuites')
 
-    with it('contains mamba as name for root'):
-        expect(self.root.get('name')).to.be('mamba')
+        with it('contains mamba as name attribute'):
+            expect(self.root.get('name')).to.be('mamba')
+
+        with it('contains total examples as tests attribute'):
+            expect(self.root.get('tests')).to.be('1')
+
+        with it('contains failed examples as failures attribute'):
+            expect(self.root.get('failures')).to.be('0')
+
+        with it('contains pending examples as disabled attribute'):
+            expect(self.root.get('disabled')).to.be('0')
+
+        with it('contains duration as time attribute'):
+            expect(self.root.get('time')).to.not_be('0')
 
     with it('contains testsuite for example group'):
         expect(self.root.find('testsuite')).to.not_be.none
