@@ -23,22 +23,22 @@ with description(formatters.XUnitFormatter):
 
     with context('when checking root'):
         with it('contains testsuites as tag name'):
-            expect(self.root.tag).to.be('testsuites')
+            expect(self.root.tag).to.be.equal('testsuites')
 
         with it('contains mamba as name attribute'):
-            expect(self.root.get('name')).to.be('mamba')
+            expect(self.root.get('name')).to.be.equal('mamba')
 
         with it('contains total examples as tests attribute'):
-            expect(self.root.get('tests')).to.be('1')
+            expect(self.root.get('tests')).to.be.equal('1')
 
         with it('contains failed examples as failures attribute'):
-            expect(self.root.get('failures')).to.be('0')
+            expect(self.root.get('failures')).to.be.equal('0')
 
         with it('contains pending examples as disabled attribute'):
-            expect(self.root.get('disabled')).to.be('0')
+            expect(self.root.get('disabled')).to.be.equal('0')
 
         with it('contains duration as time attribute'):
-            expect(self.root.get('time')).to.not_be('0')
+            expect(self.root.get('time')).to.not_be.equal('0')
 
     with it('contains testsuite for example group'):
         expect(self.root.find('testsuite')).to.not_be.none
@@ -50,5 +50,5 @@ with description(formatters.XUnitFormatter):
         expect(self.root.find('testsuite').find('testcase')).to.not_be.none
 
     with it('contains example group subject for testcase'):
-        expect(self.root.find('testsuite').find('testcase').get('name')).to.be(self.example.name)
+        expect(self.root.find('testsuite').find('testcase').get('name')).to.be.equal(self.example.name)
 
