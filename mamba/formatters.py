@@ -181,9 +181,15 @@ class XUnitFormatter(Formatter):
         self.root = ET.Element('testsuites', name='mamba')
 
     def example_group_started(self, example_group):
+        self.examples_in_current_example_group = 0
         self.current_example_group = ET.SubElement(self.root, 'testsuite', name=example_group.subject)
 
+    def example_group_finished(self, example_group):
+        self.current_example_group.set('tests', str(self.examples_in_current_example_group))
+        self.current_example_group.set('time', self._format_duration(example_group.elapsed_time))
+
     def example_started(self, example):
+        self.examples_in_current_example_group += 1
         self.current_example = ET.SubElement(self.current_example_group, 'testcase', name=example.name)
 
     def summary(self, duration, example_count, failed_count, pending_count):

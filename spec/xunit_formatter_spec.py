@@ -40,11 +40,18 @@ with description(formatters.XUnitFormatter):
         with it('contains duration as time attribute'):
             expect(self.root.get('time')).to.not_be.equal('0')
 
-    with it('contains testsuite for example group'):
-        expect(self.root.find('testsuite')).to.not_be.none
+    with context('when checking example group'):
+        with it('contains testsuite'):
+            expect(self.root.find('testsuite')).to.not_be.none
 
-    with it('contains example group subject for testsuite'):
-        expect(self.root.find('testsuite').get('name')).to.be(IRRELEVANT_SUBJECT)
+        with it('contains example group subject for testsuite'):
+            expect(self.root.find('testsuite').get('name')).to.be(IRRELEVANT_SUBJECT)
+
+        with it('contains child examples as tests attribute'):
+            expect(self.root.find('testsuite').get('tests')).to.be.equal('1')
+
+        with it('contains duration as time attribute'):
+            expect(self.root.get('time')).to.not_be.equal('0')
 
     with it('contains testcase for example'):
         expect(self.root.find('testsuite').find('testcase')).to.not_be.none
