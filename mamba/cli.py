@@ -31,7 +31,8 @@ def _parse_arguments():
     parser.add_argument('--format', '-f', default='progress', action='store', help='output format (default: %(default)s)')
     parser.add_argument('specs', default=['./spec', './specs'], nargs='*', help='paths to specs to run or directories with specs to run (default: %(default)s)')
     parser.add_argument('--no-color', default=False, action='store_true', help='turn off all output coloring (default: %(default)s)')
-    parser.add_argument('--tags', '-t', default=None, type=lambda x: [tag.strip() for tag in x.split(',')], action='store', help='run examples with specified tags (example: -t unit,integration)')
+    parser.add_argument('--tags', '-t', default=None, type=lambda x: [tag.strip() for tag in x.split(',')], action='store', dest='tags_incl', help='run examples with specified tags (example: -t unit,integration)')
+    parser.add_argument('--excl-tags', '-xt', default=None, type=lambda x: [tag.strip() for tag in x.split(',')], action='store', dest='tags_excl', help='exclude examples with specified tags (example: -xt fails)')
 
     return parser.parse_args()
 

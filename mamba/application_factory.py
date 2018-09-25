@@ -38,7 +38,8 @@ class ApplicationFactory(object):
         settings_.code_coverage_file = self.arguments.coverage_file
         settings_.format = self.arguments.format
         settings_.no_color = self.arguments.no_color
-        settings_.tags = self.arguments.tags
+        settings_.tags = dict(incl=self.arguments.tags_incl,
+                              excl=self.arguments.tags_excl)
 
     def runner(self):
         runner = runners.BaseRunner(self._example_collector(),
